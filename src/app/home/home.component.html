@@ -1,0 +1,16 @@
+<div *ngIf="!isValidUser">
+    <div class="container">
+        <form>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    placeholder="Please enter your email address ... " [(ngModel)]="this.userEmail" name="email">
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="handleLogin()">Submit</button>
+        </form>
+    </div>
+
+
+</div>
+
+<app-todo-list *ngIf="isValidUser"></app-todo-list>

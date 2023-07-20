@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { Todo } from './models/Todo';
+import { Todo } from '../models/Todo';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-todo-list',
+  templateUrl: './todo-list.component.html',
+  styleUrls: ['./todo-list.component.scss'],
 })
-export class AppComponent {
-  title = 'angular-todo-list';
+export class TodoListComponent {
   todos: Todo[] = [];
   newTodo: string;
 
@@ -28,6 +27,11 @@ export class AppComponent {
   }
 
   remove(id: number) {
-    this.todos.splice(id, 1);
+    const confirmed = window.confirm(
+      'Are you sure you want to remove this todo item ?'
+    );
+    if (confirmed) {
+      this.todos.splice(id, 1);
+    }
   }
 }
