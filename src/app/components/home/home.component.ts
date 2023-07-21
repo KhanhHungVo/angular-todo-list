@@ -16,12 +16,6 @@ export class HomeComponent {
   constructor(private userService: UserService) {}
 
   handleLogin() {
-    // if(!this.authService.isValidUser(this.userEmail)){
-    //   alert("User is not valid");
-    // } else{
-    //   this.isValidUser = true;
-    // }
-
     this.userService.getUserByEmail(this.userEmail).subscribe({
       next: (user) => {
         if (user) {
