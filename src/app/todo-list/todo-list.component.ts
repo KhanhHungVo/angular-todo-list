@@ -7,16 +7,19 @@ import { Todo } from '../models/Todo';
   styleUrls: ['./todo-list.component.scss'],
 })
 export class TodoListComponent {
+
   todos: Todo[] = [];
-  newTodo: string;
+  newTodoValue: string;
+  editTodoValue: string;
+  editIndex: number;
 
   saveTodo() {
-    if (this.newTodo) {
-      let todo = new Todo();
-      todo.description = this.newTodo;
+    if (this.newTodoValue) {
+      const todo = new Todo();
+      todo.description = this.newTodoValue;
       todo.isCompleted = false;
       this.todos.push(todo);
-      this.newTodo = '';
+      this.newTodoValue = '';
     } else {
       alert('Please enter todo');
     }
@@ -26,12 +29,28 @@ export class TodoListComponent {
     this.todos[id].isCompleted = !this.todos[id].isCompleted;
   }
 
-  remove(id: number) {
+  removeTodo(id: number) {
     const confirmed = window.confirm(
       'Are you sure you want to remove this todo item ?'
     );
     if (confirmed) {
       this.todos.splice(id, 1);
     }
+  }
+
+  editTodo() {
+    if(this.editTodoValue){
+      const todo : Todo = this.todos[this.editIndex];
+      todo.description =  this.editTodoValue;
+      this.editTodoValue = '';
+      this.editIndex = -1;
+    } else {
+      alert('Please enter todo');
+    }
+  }
+
+  callEditModal(todo: Todo, index: number){
+    this.editTodoValue = todo.description;
+    this.editIndex = index;
   }
 }

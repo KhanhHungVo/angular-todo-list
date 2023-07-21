@@ -13,6 +13,10 @@ export class HomeComponent {
   constructor(private authService: AuthService){}
 
   handleLogin() {
-    this.isValidUser = this.authService.isValidUser(this.userEmail);
+    if(!this.authService.isValidUser(this.userEmail)){
+      alert("User is not valid");
+    } else{
+      this.isValidUser = true;
+    }
   }
 }

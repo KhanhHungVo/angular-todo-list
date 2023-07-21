@@ -4,10 +4,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly validEmail = '1';
+  private readonly validEmails : string[] = ["1", "1@1.com", "test@gmail.com"];
   constructor() {}
 
   isValidUser(email: string) {
-    return email === this.validEmail;
+    return this.validEmails.includes(email);
+  }
+
+  getAllValidUsers(){
+    return this.validEmails;
   }
 }
