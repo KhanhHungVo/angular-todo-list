@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Todo } from '../models/Todo';
+import { Component, Input } from '@angular/core';
+import { Todo } from '../../models/Todo';
+import { TodoService } from 'src/app/services/todo.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -8,11 +9,18 @@ import { Todo } from '../models/Todo';
 })
 export class TodoListComponent {
 
+  @Input() userId: number; 
+
   todos: Todo[] = [];
   newTodoValue: string;
   editTodoValue: string;
   editIndex: number;
+  constructor(private todoService: TodoService){}
 
+  ngOnInit(){
+    this.getTodos();
+    console.log(this.userId);
+  }
   saveTodo() {
     if (this.newTodoValue) {
       const todo = new Todo();
@@ -23,6 +31,17 @@ export class TodoListComponent {
     } else {
       alert('Please enter todo');
     }
+  }
+
+  getTodos(){
+    this.todoService.getTodosByUser(this.userId).subscribe({
+      next: (todos) => {
+        this.todos = todos;
+      },
+      error: (err) => {
+        console.log('Error fetching todos: ', err);
+      }
+    })
   }
 
   done(id: number) {

@@ -9,8 +9,6 @@
             <button type="submit" class="btn btn-primary" (click)="handleLogin()">Submit</button>
         </form>
     </div>
-
-
 </div>
 
-<app-todo-list *ngIf="isValidUser"></app-todo-list>
+<app-todo-list [userId]="currentUser.id" *ngIf="isValidUser"></app-todo-list>
