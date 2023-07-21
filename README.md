@@ -28,5 +28,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 ## Testing
- - Using fake api https://jsonplaceholder.typicode.com/
- - Valid users found here https://jsonplaceholder.typicode.com/users
+ 
+ - Run `ng serve --open` to start the application and automatically open it in your default web browser
+ - Valid user emails can be found here https://jsonplaceholder.typicode.com/users (e.g. Sincere@april.biz)
