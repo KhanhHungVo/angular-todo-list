@@ -13,8 +13,33 @@ export class TodoService {
     ).pipe(map((res: any[]) => {
         return res.map((item: any) => ({
           description: item.title,
-          isCompleted: item.completed
+          isCompleted: item.completed,
+          userId: item.userId,
+          id: item.id
         }))
     }));
+  }
+
+  updateTodo(todo: Todo) {
+    // fake id to call jsonplace holder
+    todo.id = 1;
+    return this.httpClient.put<Todo>(
+      `https://jsonplaceholder.typicode.com/todos/${todo.id}`, todo);
+  }
+
+  updateTodoStatus(id: number, newStatus: boolean) {
+    id = 1; // fake id to call jsonplace holder
+    return this.httpClient.put<Todo>(
+      `https://jsonplaceholder.typicode.com/todos/${id}`, {completed: newStatus});
+  }
+
+  deleteTodo(id: number) {
+    return this.httpClient.delete<Todo>(
+      `https://jsonplaceholder.typicode.com/todos/${id}`);
+  }
+
+  addTodo(todo: Todo) {
+    return this.httpClient.post<Todo>(
+      `https://jsonplaceholder.typicode.com/todos`, todo);
   }
 }

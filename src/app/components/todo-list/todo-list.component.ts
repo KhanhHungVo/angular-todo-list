@@ -19,15 +19,24 @@ export class TodoListComponent {
 
   ngOnInit(){
     this.getTodos();
-    console.log(this.userId);
   }
-  saveTodo() {
+  addTodo() {
     if (this.newTodoValue) {
       const todo = new Todo();
       todo.description = this.newTodoValue;
       todo.isCompleted = false;
-      this.todos.push(todo);
-      this.newTodoValue = '';
+
+      this.todoService.addTodo(todo).subscribe({
+        next: (data) => {
+          todo.id = data.id
+          this.todos.push(todo);
+          this.newTodoValue = '';
+        },
+        error: (err) => {
+          alert('Error adding new todo');
+        }
+      });
+      
     } else {
       alert('Please enter todo');
     }
@@ -45,7 +54,14 @@ export class TodoListComponent {
   }
 
   done(id: number) {
+    var newStatus = !this.todos[id].isCompleted;
     this.todos[id].isCompleted = !this.todos[id].isCompleted;
+    this.todoService.updateTodoStatus(id, newStatus).subscribe({
+      error: (err) => {
+        alert('Error updating todo status');
+      }
+    })
+    
   }
 
   removeTodo(id: number) {
@@ -53,7 +69,15 @@ export class TodoListComponent {
       'Are you sure you want to remove this todo item ?'
     );
     if (confirmed) {
-      this.todos.splice(id, 1);
+      const deleteTodo = this.todos[id];
+      this.todoService.deleteTodo(deleteTodo.id).subscribe({
+        next: (data) => {
+          this.todos.splice(id, 1);
+        },
+        error: (err) => {
+          alert('Error deleting todo');
+        }
+      });
     }
   }
 
@@ -61,8 +85,16 @@ export class TodoListComponent {
     if(this.editTodoValue){
       const todo : Todo = this.todos[this.editIndex];
       todo.description =  this.editTodoValue;
-      this.editTodoValue = '';
-      this.editIndex = -1;
+      this.todoService.updateTodo(todo).subscribe({
+        next: (data) => {
+          this.editTodoValue = '';
+          this.editIndex = -1;
+        },
+        error: (err) => {
+          alert('Error updating todo');
+        }
+      });
+      
     } else {
       alert('Please enter todo');
     }
