@@ -15,13 +15,15 @@ export class TodoListComponent {
   newTodoValue: string;
   editTodoValue: string;
   editIndex: number;
+  isLoading: boolean = false;
   constructor(private todoService: TodoService){}
 
   ngOnInit(){
     this.getTodos();
   }
   addTodo() {
-    if (this.newTodoValue) {
+    if (this.newTodoValue && !this.isLoading) {
+      this.isLoading = true;
       const todo = new Todo();
       todo.description = this.newTodoValue;
       todo.isCompleted = false;
@@ -34,7 +36,10 @@ export class TodoListComponent {
         },
         error: (err) => {
           alert('Error adding new todo');
-        }
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
       });
       
     } else {
@@ -69,6 +74,7 @@ export class TodoListComponent {
       'Are you sure you want to remove this todo item ?'
     );
     if (confirmed) {
+      this.isLoading = true;
       const deleteTodo = this.todos[id];
       this.todoService.deleteTodo(deleteTodo.id).subscribe({
         next: (data) => {
@@ -76,6 +82,9 @@ export class TodoListComponent {
         },
         error: (err) => {
           alert('Error deleting todo');
+        },
+        complete: () => {
+          this.isLoading = false;
         }
       });
     }
@@ -85,6 +94,7 @@ export class TodoListComponent {
     if(this.editTodoValue){
       const todo : Todo = this.todos[this.editIndex];
       todo.description =  this.editTodoValue;
+      this.isLoading = true;
       this.todoService.updateTodo(todo).subscribe({
         next: (data) => {
           this.editTodoValue = '';
@@ -92,6 +102,9 @@ export class TodoListComponent {
         },
         error: (err) => {
           alert('Error updating todo');
+        },
+        complete: () => {
+          this.isLoading = false;
         }
       });
       
