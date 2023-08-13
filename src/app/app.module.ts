@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     AboutComponent,
     TodoListComponent,
+    EditTodoComponent,
   ],
   imports: [
     BrowserModule,
