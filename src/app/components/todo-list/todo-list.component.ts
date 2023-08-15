@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Todo } from '../../models/Todo';
 import { TodoService } from 'src/app/services/todo.service';
+import { EditTodoComponent } from '../edit-todo/edit-todo.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -10,7 +11,7 @@ import { TodoService } from 'src/app/services/todo.service';
 export class TodoListComponent {
 
   @Input() userId: number; 
-
+  @ViewChild(EditTodoComponent) editTodoComponent: EditTodoComponent;
   todos: Todo[] = [];
   newTodoValue: string;
   editTodoValue: string;
@@ -90,31 +91,9 @@ export class TodoListComponent {
     }
   }
 
-  editTodo() {
-    if(this.editTodoValue){
-      const todo : Todo = this.todos[this.editIndex];
-      todo.description =  this.editTodoValue;
-      this.isLoading = true;
-      this.todoService.updateTodo(todo).subscribe({
-        next: (data) => {
-          this.editTodoValue = '';
-          this.editIndex = -1;
-        },
-        error: (err) => {
-          alert('Error updating todo');
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      });
-      
-    } else {
-      alert('Please enter todo');
-    }
-  }
-
   callEditModal(todo: Todo, index: number){
     this.editTodoValue = todo.description;
     this.editIndex = index;
+    this.editTodoComponent.openModal(); 
   }
 }

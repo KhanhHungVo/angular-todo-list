@@ -1,0 +1,19 @@
+<div class="modal fade" #editTodoModal tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Todo item</h1>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeEditTodo()" [disabled]="isLoading"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" aria-label="Recipient's username"
+                    aria-describedby="button-addon2" [(ngModel)]="editTodoValue" required maxlength="250">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeEditTodo()" [disabled]="isLoading">Close</button>
+                <button type="button" class="btn btn-primary"  (click)="editTodo()" [disabled]="isLoading">Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+</div>
